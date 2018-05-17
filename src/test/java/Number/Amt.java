@@ -2,7 +2,9 @@ package Number;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @auther xzl on 11:11 2018/5/11
@@ -23,5 +25,22 @@ public class Amt {
         long lcc_time = Long.valueOf("081132");
         re_StrTime = sdf.format(new Date(lcc_time * 1000L));
         System.out.println(re_StrTime);
+
+        List<String> arr = new ArrayList(){{add("ABC");add("DEF");add("GHI");}};
+        List<String> arr1 = new ArrayList(){{add("ABC=========123");add("DEF=========~~~");add("DEF=========456");add("GHI=====789");}};
+        List<String> result = new ArrayList<>();
+        for (String st : arr){
+            for (String va : arr1){
+                if (va.indexOf(st)>-1){//包含
+                    System.out.println(arr+va+" --- 匹配成功");
+                    result.add(arr+va+" --- 匹配成功");
+                    arr1.remove(va);
+                    break;
+                }
+            }
+        }
+        for (String s : result){
+            System.out.println("结果 ："+s);
+        }
     }
 }
