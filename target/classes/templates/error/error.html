@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ERROR</title>
+    <link type="text/css" rel="stylesheet" th:attr="href=${CP_FULLPATH}+'/css/error_all.css'" />
+</head>
+<body class="error-404">
+<div id="doc_main">
+
+    <section class="bd clearfix">
+        <div class="module-error">
+            <div class="error-main clearfix">
+                <div class="label"></div>
+                <div class="info">
+                    <h3 class="title">啊哦，您所访问的资源出现异常了，可能是炸了，攻城狮正在努力排查ing...</h3>
+                    <div class="reason">
+                        <p>可能的原因：</p>
+                        <p>1.手抖打错了。</p>
+                        <p>2.链接过了保质期。</p>
+                    </div>
+                    <div class="oper">
+                        <p><a href="javascript:history.go(-1);">返回上一级页面&gt;</a></p>
+                        <!--<p><a href="/2">回到网站首页&gt;</a></p>-->
+                    </div>
+                    <div>
+                        <div th:text="${ERROR_MSG}" style="hidden:true;display: none"></div>
+                        <div th:text="${ERROR_DETAILS}" style="hidden:true;display: none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body></html>
