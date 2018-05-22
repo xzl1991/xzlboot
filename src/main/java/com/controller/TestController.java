@@ -20,10 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
@@ -77,8 +74,10 @@ public class TestController extends BaseController {
     }
 
 
-    @RequestMapping("/index")
+//    @RequestMapping(value = "/index",method ={RequestMethod.GET,RequestMethod.POST,RequestMethod.OPTIONS})
+    @RequestMapping(value = "/index")
     @ResponseBody
+    @CrossOrigin(origins = "*", maxAge = 3600) //解决跨域方法1
     @RedisLockAnnotation(key = "annotation-lock-init")
     public String index(){
         String num = movie.tackClass();

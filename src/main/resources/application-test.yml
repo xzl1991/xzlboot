@@ -30,6 +30,17 @@ info:
     description: "@project.description@"
     version: "@project.version@"
     spring-boot-version: "@project.parent@"
+email:
+    enabled: false
+    hostName: smtp.139.com
+    smtpPort: 25
+    userName: 1192373005@qq.com
+    password: xxx
+    SSLOnConnect: true
+    from: 1192373005@qq.com
+    group:
+      developers: 1192373005@qq.com
+      olg: 1192373005@qq.com
 #日志位置
 logging:
   file: /Users/selfData/temp/logs/xzl-web
