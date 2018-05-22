@@ -15,8 +15,8 @@ public class Amt {
         String amt1 = "30.064900";
         BigDecimal bigDecimal = new BigDecimal(amt);
         BigDecimal bigDecimal1 = new BigDecimal(amt1);
-        System.out.println(amt+" ====== "+(bigDecimal.intValue() == 0));
-        System.out.println(amt+" ====== "+(bigDecimal1.intValue() == 0)+"===实际值--"+bigDecimal1);
+        System.out.println(amt + " ====== " + (bigDecimal.intValue() == 0)+"&&&&&&&&&&&&--"+(34/30));
+        System.out.println(amt + " ====== " + (bigDecimal1.intValue() == 0) + "===实际值--" + bigDecimal1);
 
         String re_StrTime = null;
 
@@ -26,21 +26,30 @@ public class Amt {
         re_StrTime = sdf.format(new Date(lcc_time * 1000L));
         System.out.println(re_StrTime);
 
-        List<String> arr = new ArrayList(){{add("ABC");add("DEF");add("GHI");}};
-        List<String> arr1 = new ArrayList(){{add("ABC=========123");add("DEF=========~~~");add("DEF=========456");add("GHI=====789");}};
+        List<String> arr = new ArrayList() {{
+            add("ABC");
+            add("DEF");
+            add("GHI");
+        }};
+        List<String> arr1 = new ArrayList() {{
+            add("ABC=========123");
+            add("DEF=========~~~");
+            add("DEF=========456");
+            add("GHI=====789");
+        }};
         List<String> result = new ArrayList<>();
-        for (String st : arr){
-            for (String va : arr1){
-                if (va.indexOf(st)>-1){//包含
-                    System.out.println(arr+va+" --- 匹配成功");
-                    result.add(arr+va+" --- 匹配成功");
+        for (String st : arr) {
+            for (String va : arr1) {
+                if (va.indexOf(st) > -1) {//包含
+                    System.out.println(arr + va + " --- 匹配成功");
+                    result.add(arr + va + " --- 匹配成功");
                     arr1.remove(va);
                     break;
                 }
             }
         }
-        for (String s : result){
-            System.out.println("结果 ："+s);
+        for (String s : result) {
+            System.out.println("结果 ：" + s);
         }
     }
 }

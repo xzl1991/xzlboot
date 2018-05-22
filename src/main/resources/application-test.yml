@@ -1,0 +1,49 @@
+#端口号
+server:
+  port: 8089
+#springboot 监控配置
+management:
+  port: 7725
+  context-path: /admin
+  security:
+    enabled: true #让安全验证无效
+#    roles: SUPERUSER
+    roles: ACTUATOR
+security:
+  user:
+    name: admin
+    password: 123456
+    role: ACTUATOR
+  basic:
+    enabled: true
+    path: /admin
+endpoints:
+  beans:
+    sensitive: false
+  trace:
+    sensitive: false
+  metrics:
+    sensitive: false
+info:
+  app:
+    name: "@project.artifactId@" #从pom.xml中获取
+    description: "@project.description@"
+    version: "@project.version@"
+    spring-boot-version: "@project.parent@"
+#日志位置
+logging:
+  file: /Users/selfData/temp/logs/xzl-web
+  level:
+    root: info
+interface:
+  url: 123,456,789
+spring:
+  redis:
+    host: 1.1.1.1
+    password: 123456
+    port: 6379
+    database: 2
+    pool:
+      max-active: -1
+  thymeleaf:
+    cache: false

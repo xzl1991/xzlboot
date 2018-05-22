@@ -4,6 +4,7 @@ import com.Service.RedisLock;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.annotations.RedisLockAnno;
 import com.annotations.RedisLockAnnotation;
 import com.utils.LogUtils;
 import com.utils.StringUtils;
@@ -32,6 +33,34 @@ public class RedisInterceepter {
     private  RedisTemplate redisTemplate;
 //    @Autowired
 //    protected RedisLock redisLock;
+    /* @author xzl
+     * @Description 获取锁
+     * @Param
+     * @Date  2018-05-22 10:58:20
+     */
+//    @Around("@annotation(com.annotations.RedisLockAnno) && @annotation(redisLock )")
+//    public Object redisLock(ProceedingJoinPoint pjp, RedisLockAnno redisLock){
+//        //取出的值
+//        if(redisLock != null){
+//            //锁住的key
+//            final String lockKey = redisLock.key();
+//            //存放队列的key
+//            log.info("{},key:{}",LogUtils.getPrefix(),JSON.toJSONString(redisLock.key()));
+//            if(StringUtils.isNoneEmpty(lockKey)){
+//                log.debug("{}自定义key不为空,获取锁{}",LogUtils.getPrefix(),lockKey);
+//                try (RedisLock lock = new RedisLock(redisTemplate,lockKey);){
+//                    if (lock.lock()){
+//                        pjp.proceed();
+//                    };
+//                }catch (Exception e){
+//                    log.debug("{},获取锁失败,key:{}",LogUtils.getPrefix(),JSON.toJSONString(redisLock.key()));
+//                } catch (Throwable throwable) {
+//                    throwable.printStackTrace();
+//                }
+//            }
+//        }
+//        return null;
+//    }
     @Around("@annotation(com.annotations.RedisLockAnnotation) && @annotation(getLock)")
     public Object refreshCache(ProceedingJoinPoint pjp, RedisLockAnnotation getLock){
         log.debug("{}获取锁", LogUtils.getPrefix());
@@ -40,15 +69,13 @@ public class RedisInterceepter {
         Object value = null;
         if(getLock != null){
             final String lockKey = getLock.key();
-
-            final String ipListKey = "smsIpListRedisKeyQAAA";
             log.debug("{},key:{}",LogUtils.getPrefix(),JSON.toJSONString(getLock.key()));
             //访问目标方法的参数：
             Object[] args = pjp.getArgs();
             int status = 0;
             if (args != null && args.length > 0 ) {
 //                args[0] = "改变后的参数1";
-                status = (int) args[0];
+//                status = (int) args[1];
             }
 
             if(StringUtils.isNotEmpty(lockKey)){
@@ -58,36 +85,8 @@ public class RedisInterceepter {
                         throw new RuntimeException("自定义异常");
                     }
                     if(redisLock.lock()){
-                        //不为空
-                        JSONArray jsonArray = new JSONArray();
-                        JSONObject object ;
-                        if (redisTemplate.opsForList().size(ipListKey)==0){
-                            for (int j=0;j<2;j++){
-                                int i=0;
-                                for (;i<5;i++){//存放数据ip和端口
-                                    jsonArray = new JSONArray();
-                                    jsonArray.add("httpHeadip+smsSendUrl:"+j);
-                                    jsonArray.add(i);
-                                    redisTemplate.opsForList().leftPush(ipListKey,jsonArray);
-                                }
-                            }
-
-//                            redisTemplate.opsForList().leftPushAll(ipListKey,jsonArray);
-                        }
-//                        value = redisTemplate.opsForList().leftPop(ipListKey).toString();
-//                        value = JSONArray.parse(redisTemplate.opsForList().leftPop(ipListKey).toString());
-                        value = redisTemplate.opsForList().leftPop(ipListKey);
-                        redisTemplate.opsForList().rightPush(ipListKey,value);//放回
-                        JSONArray arr = new JSONArray();arr.add("httpHeadip+smsSendUrl:1");
-                        arr.add(2);
-                        redisTemplate.opsForList().remove(ipListKey,0,arr.toJSONString());
-                        redisTemplate.opsForList().range(ipListKey,0,-1);
-//                        redisTemplate.opsForList().remove(ipListKey,0,value);//移除
-//                        builder.append(redisTemplate.opsForList().range(ipListKey,0,-1)).append("::拿到的值：").append(value)
-//                                .append("<新的：").append(redisTemplate.opsForList().range(ipListKey,0,-1));
+                      return  pjp.proceed();
                     }
-//                    value =  builder.toString();
-
                 }catch (Exception e){
                     try {
                         value =  pjp.proceed();
@@ -95,6 +94,8 @@ public class RedisInterceepter {
                         throwable.printStackTrace();
                     }
                     e.printStackTrace();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
                 }
             }
         }

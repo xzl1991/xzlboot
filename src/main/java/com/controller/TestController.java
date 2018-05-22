@@ -1,6 +1,8 @@
 package com.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.annotations.RedisLockAnno;
 import com.annotations.RedisLockAnnotation;
 import com.common.BaseController;
 import com.common.Movie;
@@ -77,6 +79,7 @@ public class TestController extends BaseController {
 
     @RequestMapping("/index")
     @ResponseBody
+    @RedisLockAnnotation(key = "annotation-lock-init")
     public String index(){
         String num = movie.tackClass();
         System.out.println(value);
@@ -102,8 +105,7 @@ public class TestController extends BaseController {
 
     })
     @RequestMapping(value = "/init/{status}")
-    @ResponseBody
-//    @RedisLockAnnotation(key = "SmsProtService-init")
+    @ResponseBody @RedisLockAnnotation(key = "annotation-lock-init")
     public JSONArray testLock(HttpServletRequest request, @PathVariable int status){//testServiceDubbo
 
         final String ipListKey = "smsIpListRedisKey";
@@ -134,7 +136,32 @@ public class TestController extends BaseController {
 //    @ResponseBody
     @RedisLockAnnotation(key = "SmsProtService-init")
     public JSONArray getIpPort(int status){
+        //不为空
         JSONArray jsonArray = new JSONArray();
+        JSONObject object ;
+        final String ipListKey = "smsIpListRedisKeyQAAABB";
+        if (redisTemplate.opsForList().size(ipListKey)==0){
+            for (int j=0;j<2;j++){
+                int i=0;
+                for (;i<5;i++){//存放数据ip和端口
+                    jsonArray = new JSONArray();
+                    jsonArray.add("httpHeadip+smsSendUrl:"+j);
+                    jsonArray.add(i);
+                    redisTemplate.opsForList().leftPush(ipListKey,jsonArray);
+                }
+            }
+        }
+        Object value = redisTemplate.opsForList().leftPop(ipListKey);
+        redisTemplate.opsForList().rightPush(ipListKey,value);//放回
+        if (value != null){
+            System.out.println("smsIpListRedisKeyQAAA===========不是空***********");
+            return (JSONArray) value;
+        }
+        JSONArray arr = new JSONArray();arr.add("httpHeadip+smsSendUrl:1");
+        arr.add(2);
+        redisTemplate.opsForList().remove(ipListKey,0,arr.toJSONString());
+        redisTemplate.opsForList().range(ipListKey,0,-1);
+
         String[] ips = new String[]{"abc","ABC","CNN"};
         jsonArray.add(ips[new Random().nextInt(ips.length)]);
         jsonArray.add(new Random().nextInt(32));
