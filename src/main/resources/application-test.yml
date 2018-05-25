@@ -41,6 +41,11 @@ email:
     group:
       developers: 1192373005@qq.com
       olg: 1192373005@qq.com
+#elastic-job定义
+elastic-job:
+  regCenter:
+    serverList: 122222:2181
+    namespace: ermasConfig_xzl
 #日志位置
 logging:
   file: /Users/selfData/temp/logs/xzl-web
