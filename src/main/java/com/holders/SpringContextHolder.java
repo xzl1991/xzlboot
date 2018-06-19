@@ -1,9 +1,17 @@
 package com.holders;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.TypeConverter;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.beans.factory.config.DependencyDescriptor;
+import org.springframework.beans.factory.config.NamedBeanHolder;
+import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 /**
  * Created by xlizy on 2017/3/29.
@@ -28,4 +36,7 @@ public class SpringContextHolder implements ApplicationContextAware {
     public static <T> T getBean(Class<T> cla) throws BeansException {
         return (T) applicationContext.getBean(cla);
     }
+
+
+
 }

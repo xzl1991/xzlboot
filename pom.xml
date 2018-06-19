@@ -6,7 +6,11 @@
 
     <groupId>xzl-boot2.0</groupId>
     <artifactId>xzl-boot2.0</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>dataStruct</module>
+    </modules>
 
     <!--region 指定编码 -->
     <properties>
@@ -18,7 +22,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
+        <version>2.0.2.RELEASE</version>
     </parent>
     <!--endregion -->
     <dependencies>
@@ -109,16 +113,29 @@
             <groupId>com.dangdang</groupId>
             <artifactId>elastic-job-lite-lifecycle</artifactId>
             <version>2.1.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.aggregate</groupId>
+                    <artifactId>jetty-all-server</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.dangdang</groupId>
             <artifactId>elastic-job-lite-core</artifactId>
             <version>2.1.4</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.dangdang</groupId>-->
+            <!--<artifactId>elastic-job-lite-spring</artifactId>-->
+            <!--<version>2.1.4</version>-->
+        <!--</dependency>-->
+        <!--region test获取bean -->
         <dependency>
-            <groupId>com.dangdang</groupId>
-            <artifactId>elastic-job-lite-spring</artifactId>
-            <version>2.1.4</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>2.5.6</version>
         </dependency>
+        <!--endregion -->
     </dependencies>
 </project>

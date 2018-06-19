@@ -16,9 +16,12 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +42,8 @@ public class TestController extends BaseController {
     String value;
     @Autowired
     protected RedisTemplate redisTemplate;
+    @Autowired @Qualifier("stringRedisTemplate")
+    RedisTemplate stringRedisTemplate;
     @Autowired
     protected Movie movie;
     //    @Autowired
@@ -60,6 +65,25 @@ public class TestController extends BaseController {
     @ResponseBody
     public String redisGetByKey(){
 //        redisTemplate.opsForValue().set(startKey,startKey);
+        double stringValueDouble = redisTemplate.opsForValue().increment("doubleValue",5);
+        Long intValue = redisTemplate.opsForValue().increment("doubleValue1",5);
+        System.out.println("----------"+stringValueDouble);
+        Integer start = 0;
+        stringRedisTemplate.opsForValue().set("xxx","5");
+        Long va = stringRedisTemplate.opsForValue().increment("xxx",1);
+        stringRedisTemplate.expire("xxx", 30, TimeUnit.SECONDS);
+        System.out.println("过期时间："+stringRedisTemplate.getExpire("xxx"));
+        redisTemplate.opsForValue().set("1111111111111111111112",start);
+        redisTemplate.opsForValue().increment("1111111111111111111112",1);
+        System.out.println("1取出的值:"+(int)redisTemplate.opsForValue().get("1111111111111111111112"));
+
+
+
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Long.class));
+        redisTemplate.opsForValue().set("111111111111111111111",start);
+        redisTemplate.opsForValue().increment("111111111111111111111",1);
+        System.out.println("取出的值:"+(int)redisTemplate.opsForValue().get("111111111111111111111"));
         log.debug("{}将短信修复开始时间放入缓存中,默认值:{},redisKey:{}", LogUtils.getPrefix(),startKey,startKey);
 //        redisTemplate.expire(startKey, 60, TimeUnit.SECONDS);
         return redisTemplate.opsForValue().get(startKey).toString();

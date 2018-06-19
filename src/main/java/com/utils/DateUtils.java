@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @auther xzl on 10:18 2018/5/10
@@ -35,5 +36,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
             e.printStackTrace();
         }
         return  sdf2.format(cal.getTime());
+    }
+
+    public static Date getDayFromToday(Date date, int i) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, i);
+        date = calendar.getTime();
+        return date;
     }
 }

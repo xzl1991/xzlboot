@@ -85,6 +85,8 @@ public class RedisInterceepter {
                         throw new RuntimeException("自定义异常");
                     }
                     if(redisLock.lock()){
+                        Thread.sleep(5000);
+                        System.out.println("等待5s =======");
                       return  pjp.proceed();
                     }
                 }catch (Exception e){
