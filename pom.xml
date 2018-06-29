@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>dataStruct</module>
+        <module>jvmTest</module>
     </modules>
 
     <!--region 指定编码 -->

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/dataStruct/dataStruct.iml" filepath="$PROJECT_DIR$/dataStruct/dataStruct.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jvmTest/jvmTest.iml" filepath="$PROJECT_DIR$/jvmTest/jvmTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/xzlboot-new-xzl.iml" filepath="$PROJECT_DIR$/xzlboot-new-xzl.iml" />
     </modules>
   </component>

@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="dataStruct" />
+        <module name="jvmTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="dataStruct" target="1.7" />
+      <module name="dataStruct" target="1.8" />
+      <module name="jvmTest" target="1.7" />
       <module name="xzlboot-new-xzl" target="1.7" />
     </bytecodeTargetLevel>
   </component>
